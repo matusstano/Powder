@@ -31,6 +31,9 @@ joint, a spark, fuel vapour. Then watch it run, overheat, knock, and blow up.
   liquids are crisp pixels with real material texture (wood grain, sand grain mixes, brushed steel).
   Fire, embers and molten metal are see-through and glowing, light the scene and cast shadows.
   Smoke is soft. No flat colour fills, which read as childish.
+- **Setting: a clean test lab, not a cave.** Dark lab (charcoal panels) by default, with a white lab
+  theme. Walls are panels with a faint measuring grid and ruler ticks, the floor is a steel-edged
+  bench. Fire, soot and scorch marks stand out against the clean surfaces.
 - **UI: game hotbar (UI 3) as the default, plus a lab mode (split view, probes, graphs).** The play
   screen gets a 1–9 element hotbar, a tool rail, element tooltip cards and challenge cards. Lab
   mode adds a split view (normal / heat / O₂ / pressure / stress), pinned probes and live graphs.
