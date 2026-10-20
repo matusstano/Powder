@@ -34,6 +34,8 @@ joint, a spark, fuel vapour. Then watch it run, overheat, knock, and blow up.
 - **Setting: a clean test lab, not a cave.** Dark lab (charcoal panels) by default, with a white lab
   theme. Walls are panels with a faint measuring grid and ruler ticks, the floor is a steel-edged
   bench. Fire, soot and scorch marks stand out against the clean surfaces.
+- **UI style: Apple-like.** System font, greys, frosted panels, system blue for selection. No
+  orange UI. Colour is saved for the materials and the fire.
 - **UI: game hotbar (UI 3) as the default, plus a lab mode (split view, probes, graphs).** The play
   screen gets a 1–9 element hotbar, a tool rail, element tooltip cards and challenge cards. Lab
   mode adds a split view (normal / heat / O₂ / pressure / stress), pinned probes and live graphs.
@@ -169,6 +171,20 @@ charred through, not because a script says so.
   shaken, then they slide. Water erodes sand and dirt.
 - **Joints**: rope, chain, hinges and welds are bonds with their own strength, so you can build
   bridges, cranes and towers that fail in believable ways.
+
+**Build tools: both freehand and precise**
+- **Freehand brush** for organic stuff: piles of sand, pools, blobs of fuel, rough walls.
+- **Line**: snaps to 15° angles, the grid, the ends of existing parts and, optionally, surfaces.
+  Shows the length and angle while you drag. Hold ⌥ to turn snapping off.
+- **Shape**: rectangles and circles for tanks, boxes and chambers. A hollow option sets the wall
+  thickness.
+- **Joint**: weld, hinge, rope or loose. Line ends choose weld, hinge or loose as you draw.
+- **Everything you draw is real structure.** A steel line is a beam with bonds, weight and
+  strength, and so is a freehand wood blob. Drawn things carry load, bend, crack and snap like
+  anything else.
+- **Live load preview while placing**: "load vs strength 62 %", how much it'll sag, and the
+  temperature at which it fails. You see the weak point before you let go.
+- Undo, plus scrubbing the replay timeline back to just before something broke.
 
 **World settings (sliders, in a world panel)**
 - **Gravity**: strength (0 → 3 g) and **direction** (rotate it with a trackpad gesture). Also
