@@ -25,6 +25,17 @@ and electricity. That's the competition, so "better" needs more than a longer el
 The core pitch: **build a working engine out of pixels.** A cylinder made of steel, a piston on a
 joint, a spark, fuel vapour. Then watch it run, overheat, knock, and blow up.
 
+### Direction so far
+
+- **Art: hybrid lit pixel, "pixels as the canvas, light as the paint".** Solids, powders and
+  liquids are crisp pixels with real material texture (wood grain, sand grain mixes, brushed steel).
+  Fire, embers and molten metal are see-through and glowing, light the scene and cast shadows.
+  Smoke is soft. No flat colour fills, which read as childish.
+- **UI: game hotbar (UI 3) as the default, plus a lab mode (split view, probes, graphs).** The play
+  screen gets a 1–9 element hotbar, a tool rail, element tooltip cards and challenge cards. Lab
+  mode adds a split view (normal / heat / O₂ / pressure / stress), pinned probes and live graphs.
+- Mockups: the "Kiln UI & Art Style Mockups" design canvas (UI 3 and UI 4 boards).
+
 ---
 
 ## 2. Engine architecture: layered hybrid simulation
@@ -136,7 +147,45 @@ gunpowder (oxidiser built in, so it burns underwater), and electrolysis.
 
 ---
 
-## 5. Machines and "engines" as gameplay
+## 5. Structure, collapse and gravity
+
+Things should fall down for real reasons. A burning shed sags and then collapses because its posts
+charred through, not because a script says so.
+
+**Structural integrity**
+- Every solid has a **strength** (compressive and tensile) and **bonds** to its solid neighbours.
+- **Load paths**: weight flows down through bonds to anything anchored (bedrock, pinned walls).
+  Long unsupported spans take bending load, so cantilevers and bridges sag and snap at the weak point.
+- **Islands**: when bonds break, a flood fill finds pieces no longer connected to an anchor. Those
+  pieces become **rigid bodies** that fall, tumble and land. Hard impacts shatter them into debris.
+- **Heat weakens things**: charred wood loses most of its strength; steel above about 550 °C loses
+  half its yield strength and starts to sag; concrete spalls. A fire can bring a building down.
+- **Damage from forces**: explosion shock waves, impacts and pressure break bonds. Brittle
+  materials (glass, brick) crack and shatter; ductile ones (steel, copper) bend first.
+- **Granular collapse**: sand piles keep their angle of repose until they're undercut, wetted or
+  shaken, then they slide. Water erodes sand and dirt.
+- **Joints**: rope, chain, hinges and welds are bonds with their own strength, so you can build
+  bridges, cranes and towers that fail in believable ways.
+
+**World settings (sliders, in a world panel)**
+- **Gravity**: strength (0 → 3 g) and **direction** (rotate it with a trackpad gesture). Also
+  per-zone gravity fields and point attractors ("planets").
+- **Zero-g is emergent**: with no gravity there's no buoyancy, so hot gas doesn't rise. Flames turn
+  into small blue spheres that smother themselves, the way they do on the ISS.
+- **Air**: density and pressure (thin air means weaker flames and lower boiling points), oxygen
+  level (pure O₂ makes everything violently flammable), ambient temperature, and wind.
+- **Time scale**: slow motion for watching collapses and explosions frame by frame.
+- **Per-material physics**: friction, restitution (bounciness), density and strength are all
+  editable in the material editor.
+
+**Views that make it readable**
+- A **stress view** in lab mode colours each solid by load relative to its strength, so you can
+  see where a structure will fail before it does.
+- Cracks render on the material as it gets close to failing.
+
+---
+
+## 6. Machines and "engines" as gameplay
 
 The rigid-body plus gas-pressure coupling makes these buildable from parts:
 
@@ -158,7 +207,7 @@ readout comparing fuel energy in with work out.
 
 ---
 
-## 6. Why macOS native, and what to use
+## 7. Why macOS native, and what to use
 
 **Stack recommendation**
 - **Swift + SwiftUI** for the app shell, inspector panels, material browser and settings.
@@ -193,7 +242,7 @@ readout comparing fuel energy in with work out.
 
 ---
 
-## 7. Modding and data
+## 8. Modding and data
 
 - Materials, reactions and colours live in TOML/JSON files, not in code.
 - Scripting via Lua (or JavaScriptCore, which ships with macOS) for custom elements and challenges.
@@ -201,24 +250,27 @@ readout comparing fuel energy in with work out.
 
 ---
 
-## 8. Roadmap sketch
+## 9. Roadmap sketch
 
 1. **Skeleton**: Swift app, Metal renderer, particle grid with sand, water, wall and a brush tool.
+   Gravity is a vector from day one (strength and direction), so it can be a slider later for free.
 2. **Heat**: temperature per cell, conduction, phase changes (ice/water/steam, rock/lava).
 3. **Gas field**: stable-fluids solver on the GPU, buoyancy, smoke, O₂ channel.
 4. **Combustion v1**: pyrolysis, the fire triangle, flame colours, smoke and soot.
 5. **Pressure and explosions**: gas expansion, shock waves, particles thrown with velocity.
-6. **Rigid bodies**: pixel bodies, fracture, joints.
+6. **Rigid bodies and structure**: pixel bodies, bonds and strength, load paths, unsupported
+   islands breaking off, fracture, joints, heat weakening. Milestone: **a burning shed collapses**.
 7. **Coupling**: gas pressure ↔ bodies. This is the milestone where **the first piston moves**.
 8. **Electricity and instruments**.
-9. **Challenges, saves, sharing, polish**.
+9. **World settings**: gravity direction and zones, air pressure, O₂ level, wind, time scale.
+10. **Challenges, saves, sharing, polish**.
 
 The first real milestone is steps 1–4: a candle that burns out under a glass jar because it used
 up the oxygen. If that looks and feels good, the concept is proven.
 
 ---
 
-## 9. Risks
+## 10. Risks
 
 - **Scope.** Every layer is a project of its own. Cut ruthlessly, and treat steps 1–4 as the game
   until proven otherwise.
@@ -231,11 +283,10 @@ up the oxygen. If that looks and feels good, the concept is proven.
 
 ---
 
-## 10. Open questions
+## 11. Open questions
 
 - Is "engine" the **simulation engine** (tech showcase, pure sandbox), or are **in-game engines and
   machines** the goal? This doc assumes both.
 - Mac-only forever, or keep the core portable (C++) for an iPad version later? Apple Pencil plus
   a sandbox is a natural fit.
-- Pixel-art look (crisp cells) or smooth and glowy (HDR, bloom, blur)? Or a toggle?
 - Single player only, or online save sharing like Powder Game's upload board?
